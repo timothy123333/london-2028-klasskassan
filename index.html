@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b1424">
+<title>London 2028 – Klasskassan</title>
+<style>
+:root{--bg:#0b1424;--panel:#13213a;--panel2:#1b2b46;--text:#f4f7fb;--muted:#aab7ca;--green:#24c78a;--line:rgba(255,255,255,.09);--red:#ff8585}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% -20%,#263d60 0%,var(--bg) 58%);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Arial,sans-serif}
+.wrap{width:min(1060px,calc(100% - 32px));margin:auto;padding:38px 0 55px}
+header{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:28px}.brand{display:flex;gap:13px;align-items:center}.logo{width:44px;height:44px;border-radius:14px;background:var(--green);color:#062319;display:grid;place-items:center;font-size:23px;font-weight:900}.eyebrow{color:var(--green);font-size:11px;letter-spacing:2px;font-weight:800}h1{font-size:clamp(21px,4vw,29px);margin:3px 0 0;letter-spacing:-.8px}.live{border:1px solid #24c78a55;color:#9ce9cb;background:#24c78a18;border-radius:99px;padding:8px 12px;font-size:12px;white-space:nowrap}.live:before{content:"";display:inline-block;width:7px;height:7px;background:var(--green);border-radius:50%;margin-right:7px}
+.hero{background:linear-gradient(135deg,#1a2b47,#111e34);border:1px solid var(--line);border-radius:25px;padding:clamp(22px,5vw,42px);box-shadow:0 24px 70px #0003}.heroTop{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;flex-wrap:wrap}.label{color:var(--muted);font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase}.total{font-size:clamp(43px,9vw,72px);line-height:1.08;font-weight:850;letter-spacing:-3px;margin:12px 0 8px;color:var(--green);font-variant-numeric:tabular-nums}.goal{color:var(--muted);font-size:14px}.percent{background:#24c78a1f;color:#8fe5c1;padding:10px 14px;border-radius:13px;font-size:18px;font-weight:800}.progress{height:12px;background:#0b1628;border-radius:20px;overflow:hidden;margin:27px 0 12px;border:1px solid var(--line)}.bar{height:100%;width:0;background:linear-gradient(90deg,#16a873,#51e0a8);border-radius:20px;transition:width .5s}.progressFoot{display:flex;justify-content:space-between;gap:12px;color:var(--muted);font-size:12px}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:16px 0 28px}.stat,.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:20px}.stat strong{display:block;font-size:25px;margin-top:8px}.grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:16px;align-items:start}.card{padding:22px}h2{font-size:17px;margin:0 0 5px}.sub{color:var(--muted);font-size:12px;margin:0 0 20px;line-height:1.5}label{display:block;color:#d5deea;font-size:12px;font-weight:700;margin:14px 0 7px}input{width:100%;border:1px solid #31435f;border-radius:11px;background:#0d192c;color:white;padding:13px 14px;outline:none;font:inherit}input:focus{border-color:var(--green);box-shadow:0 0 0 3px #24c78a20}button{width:100%;margin-top:18px;border:0;border-radius:11px;padding:14px;background:var(--green);color:#062319;font-weight:850;font-size:14px;cursor:pointer}button:disabled{opacity:.55;cursor:wait}.notice{color:var(--muted);font-size:11px;line-height:1.5;margin:13px 0 0}.entries{display:flex;flex-direction:column;max-height:460px;overflow:auto}.entry{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}.entry:last-child{border:0}.person{font-weight:750;font-size:14px}.date,.message{color:var(--muted);font-size:11px;margin-top:4px}.amount{color:var(--green);font-weight:800;white-space:nowrap}.empty{color:var(--muted);font-size:13px;padding:18px 0}.status{min-height:18px;color:#9ce9cb;font-size:12px;margin-top:10px}.error{color:var(--red)}footer{text-align:center;color:#71819a;font-size:11px;margin-top:24px}
+@media(max-width:720px){.grid{grid-template-columns:1fr}.stats{gap:10px}.stat{padding:16px}header{align-items:flex-start}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<header><div class="brand"><div class="logo">L</div><div><div class="eyebrow">KLASSRESA · APRIL 2028</div><h1>London 2028 – Klasskassan</h1></div></div><div class="live">Live-uppdatering</div></header>
+<section class="hero"><div class="heroTop"><div><div class="label">Insamlat totalt</div><div class="total" id="total">0 kr</div><div class="goal">av <span id="goal">83 725 kr</span> i insamlingsmål</div></div><div class="percent" id="percent">0 %</div></div><div class="progress"><div class="bar" id="bar"></div></div><div class="progressFoot"><span id="remaining">83 725 kr kvar</span><span id="progressText">0 % av målet</span></div></section>
+<section class="stats"><div class="stat"><div class="label">Kvar att samla in</div><strong id="remainingStat">83 725 kr</strong></div><div class="stat"><div class="label">Antal inbetalningar</div><strong id="count">0</strong></div></section>
+<section class="grid">
+<div class="card"><h2>Lägg till inbetalning</h2><p class="sub">Registrera pengar som faktiskt har skickats till klasskassan.</p>
+<form id="form"><label for="name">Vem skickade pengarna?</label><input id="name" maxlength="60" placeholder="Skriv ditt namn" required>
+<label for="amount">Belopp (kr)</label><input id="amount" type="number" min="1" max="1000000" step="1" placeholder="T.ex. 300" required>
+<label for="message">Meddelande (valfritt)</label><input id="message" maxlength="160" placeholder="T.ex. Klasskassan">
+<button id="submit">Registrera inbetalning</button><div class="status" id="status" aria-live="polite"></div></form>
+<p class="notice">En vuxen ansvarig bör kontrollera att pengarna kommit in innan en registrering godkänns.</p></div>
+<div class="card"><h2>Inbetalningar</h2><p class="sub">Senaste registrerade inbetalningar.</p><div class="entries" id="entries"><div class="empty">Ansluter…</div></div></div>
+</section><footer>London 2028 · Klasskassan</footer>
+</main>
+<script type="module">
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+// Fyll i dessa två värden efter att en vuxen har skapat ett Supabase-projekt.
+const SUPABASE_URL = 'KLIStra-IN-PROJECT-URL';
+const SUPABASE_ANON_KEY = 'https://gjarmdhpqydasnwmnczh.supabase.co/rest/v1/';
+const GOAL = 83725;
+const configured = SUPABASE_URL.startsWith('https://') && !SUPABASE_URL.includes('KLIStra-IN') && !SUPABASE_ANON_KEY.includes('KLIStra-IN');
+const $ = id => document.getElementById(id);
+const money = n => new Intl.NumberFormat('sv-SE',{maximumFractionDigits:0}).format(n)+' kr';
+let supabase;
+function status(msg,error=false){$('status').textContent=msg;$('status').className='status'+(error?' error':'');}
+function render(rows){
+ const total=rows.reduce((s,r)=>s+Number(r.amount||0),0), pct=Math.min(100,total/GOAL*100), left=Math.max(0,GOAL-total);
+ $('total').textContent=money(total);$('goal').textContent=money(GOAL);$('percent').textContent=Math.floor(pct)+' %';
+ $('bar').style.width=pct+'%';$('remaining').textContent=money(left)+' kvar';$('remainingStat').textContent=money(left);
+ $('progressText').textContent=pct.toFixed(1).replace('.',',')+' % av målet';$('count').textContent=rows.length;
+ const box=$('entries');box.replaceChildren();
+ if(!rows.length){const e=document.createElement('div');e.className='empty';e.textContent='Inga inbetalningar ännu.';box.append(e);return;}
+ rows.slice(0,100).forEach(r=>{const row=document.createElement('div');row.className='entry';const l=document.createElement('div'),p=document.createElement('div');p.className='person';p.textContent=r.name;l.append(p);
+ if(r.created_at){const d=document.createElement('div');d.className='date';d.textContent=new Date(r.created_at).toLocaleString('sv-SE');l.append(d)}
+ if(r.message){const m=document.createElement('div');m.className='message';m.textContent=r.message;l.append(m)}
+ const a=document.createElement('div');a.className='amount';a.textContent='+'+money(Number(r.amount));row.append(l,a);box.append(row);});
+}
+async function load(){const {data,error}=await supabase.from('payments').select('id,name,amount,message,created_at').order('created_at',{ascending:false}).limit(500);if(error){status('Kunde inte läsa inbetalningar: '+error.message,true);return;}render(data||[]);}
+if(!configured){$('entries').innerHTML='<div class="empty">Webbplatsens design är klar. Databasen behöver anslutas genom att fylla i Supabase-adress och publik nyckel i filen index.html. Se INSTALLATION.txt.</div>';status('Databasen är inte ansluten ännu.',true);}
+else{
+ supabase=createClient(SUPABASE_URL,SUPABASE_ANON_KEY);await load();
+ supabase.channel('payments-live').on('postgres_changes',{event:'*',schema:'public',table:'payments'},load).subscribe();
+}
+$('form').addEventListener('submit',async e=>{e.preventDefault();if(!configured){status('Databasen måste anslutas först.',true);return;}
+ const name=$('name').value.trim(),amount=Number($('amount').value),message=$('message').value.trim();
+ if(!name||!Number.isInteger(amount)||amount<1){status('Kontrollera namn och belopp.',true);return;}
+ $('submit').disabled=true;$('submit').textContent='Sparar…';
+ const {error}=await supabase.from('payments').insert({name,amount,message});
+ $('submit').disabled=false;$('submit').textContent='Registrera inbetalning';
+ if(error){status('Kunde inte spara: '+error.message,true);return;}
+ $('form').reset();status('Inbetalningen har registrerats.');
+});
+</script>
+</body></html>
